@@ -71,7 +71,7 @@ public class CoinMachineController {
    
     
 
-    private Map<Double, Integer> calculateChange(int bill) {
+    public Map<Double, Integer> calculateChange(int bill) {
         Map<Double, Integer> change = new TreeMap<>();
         double remaining = bill;
 
