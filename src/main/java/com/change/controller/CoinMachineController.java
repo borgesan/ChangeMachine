@@ -44,7 +44,6 @@ public class CoinMachineController {
 
     
     @GetMapping("/change/{bill}")
-    //public ResponseEntity<Map<Double, Integer>> getChange(@PathVariable Double bill) {
     public ResponseEntity<?> getChange(@PathVariable int bill) {       
     
    	
@@ -61,9 +60,6 @@ public class CoinMachineController {
         
     	Map<Double, Integer> change = calculateChange(bill);
        
-//        if (change == null) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
        
         updateBalanceAndAvailableCoins(change);
         return ResponseEntity.ok(change);
@@ -87,10 +83,7 @@ public class CoinMachineController {
             }
             change.put(coin, count);
         }
-//        if (remaining > 0) {
-//            // Bill exceeds max possible change
-//            return null;
-        //}
+
         
         return change;
     }
