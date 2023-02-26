@@ -2,6 +2,7 @@ package com.change.service;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -40,29 +41,70 @@ public class CoinMachineService {
 		coins.keySet().stream().forEach(entry -> balance = balance + (coins.get(entry) * entry));
 	}
 
-	public Map<Double, Integer> calculateChange(int bill) {
-		Map<Double, Integer> change = new TreeMap<>();
-		double remaining = bill;
+//	public Map<Double, Integer> calculateChange(int bill) {
+//		Map<Double, Integer> change = new TreeMap<>();
+//		double remaining = bill;
+//
+//		TreeMap<Double, Integer> invertedCoins = new TreeMap<>(Comparator.reverseOrder());
+//		invertedCoins.putAll(coins);
+//
+//		for (Double coin : invertedCoins.keySet()) {
+//			int count = 0;
+//			while (remaining >= coin && invertedCoins.get(coin) > count) {
+//			// Second test is to ensure the coin wont get negative
+//				remaining -= coin;
+//				remaining = Math.round(remaining * 100.0) / 100.0;
+//				count++;
+//			}
+//			change.put(coin, count);
+//		}
+//
+//		updateBalanceAndAvailableCoins(change);
+//
+//		return change;
+//	}
 
-		TreeMap<Double, Integer> invertedCoins = new TreeMap<>(Comparator.reverseOrder());
-		invertedCoins.putAll(coins);
+	
+	public Map<Double, Integer> calculateChange(double billAmount) {
+        Map<Double, Integer> change = new HashMap<>(); // stores the change in coins
 
-		for (Double coin : invertedCoins.keySet()) {
-			int count = 0;
-			while (remaining >= coin && invertedCoins.get(coin) > count) {
-			// Second test is to ensure the coin wont get negative
-				remaining -= coin;
-				remaining = Math.round(remaining * 100.0) / 100.0;
-				count++;
-			}
-			change.put(coin, count);
-		}
+        double remainingChange = billAmount;
+        
+        TreeMap<Double, Integer> invertedCoins = new TreeMap<>(Comparator.reverseOrder());
+        invertedCoins.putAll(coins);
+        
+        for (double coinValue : invertedCoins.keySet()) {
+            int coinsNeeded = (int) Math.floor(remainingChange / coinValue); // calculate number of coins needed
+            coinsNeeded = Math.min(coinsNeeded, coins.get(coinValue)); // check if enough coins are available
+            change.put(coinValue, coinsNeeded); // add coins to change hashmap
+            coins.put(coinValue, coins.get(coinValue) - coinsNeeded); // update available coins
+            remainingChange -= coinsNeeded * coinValue; // update remaining change
+            if (remainingChange == 0) {
+                break; // exit loop if exact change is found
+            }
+        }
 
-		updateBalanceAndAvailableCoins(change);
+        // Update balance
+       // this.setBalance(0.0);
+        //coins.keySet().stream().forEach(entry -> balance = balance + (coins.get(entry) * entry));
+        
+        double b = 0;
+        for (Double k: coins.keySet()) {
+        	b = b + (coins.get(k) * k);
+        }
+        this.setBalance(balance - b);
+        
+        
+//        if (remainingChange > 0) {
+//            System.out.println("Not enough coins to give exact change"); // handle insufficient coins
+//        }
 
-		return change;
-	}
-
+        return change;
+    }
+	
+	
+	
+	
 	private void updateBalanceAndAvailableCoins(Map<Double, Integer> change) {
 
 		// Update the number of coins available after the last change
