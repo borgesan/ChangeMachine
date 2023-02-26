@@ -6,20 +6,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CoinMachineService {
 
-	// @Value("${app.acceptedBills}")
-	// private List<Integer> acceptedBills;
-	private List<Integer> acceptedBills = Arrays.asList(1, 2, 5, 10, 20, 50, 100);
+	@Value("${app.bills}")
+	private List<Integer> acceptedBills;
 
+	//@Value("#{${app.coins}}")
 	private Map<Double, Integer> coins = new TreeMap<>();
+	
 
 	private Double balance;
 
-	// Start
+
 	public CoinMachineService() {
 		initialize();
 	}
@@ -34,7 +36,7 @@ public class CoinMachineService {
 		coins.put(0.10, 100);
 		coins.put(0.25, 100);
 
-		balance = 0.0;
+		this.setBalance(0.0);
 		coins.keySet().stream().forEach(entry -> balance = balance + (coins.get(entry) * entry));
 	}
 
@@ -68,7 +70,7 @@ public class CoinMachineService {
 		}
 
 		// Update the balance
-		balance = 0.0;
+		this.setBalance(0.0);
 		coins.keySet().stream().forEach(entry -> balance = balance + (coins.get(entry) * entry));
 
 	}
@@ -83,6 +85,10 @@ public class CoinMachineService {
 
 	public Double getBalance() {
 		return balance;
+	}
+	
+	public void setBalance(Double balance) {
+		this.balance = balance;
 	}
 
 }
