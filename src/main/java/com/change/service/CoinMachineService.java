@@ -50,6 +50,7 @@ public class CoinMachineService {
 		for (Double coin : invertedCoins.keySet()) {
 			int count = 0;
 			while (remaining >= coin && invertedCoins.get(coin) > count) {
+			// Second test is to ensure the coin wont get negative
 				remaining -= coin;
 				remaining = Math.round(remaining * 100.0) / 100.0;
 				count++;
@@ -72,6 +73,9 @@ public class CoinMachineService {
 		// Update the balance
 		this.setBalance(0.0);
 		coins.keySet().stream().forEach(entry -> balance = balance + (coins.get(entry) * entry));
+		
+		//balance = balance - (coins.keySet().stream().map(coins.get(s) * s).count());
+
 
 	}
 

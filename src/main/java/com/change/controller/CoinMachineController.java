@@ -4,15 +4,15 @@ package com.change.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.change.service.CoinMachineService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @RestController
@@ -26,6 +26,8 @@ public class CoinMachineController {
     public ResponseEntity<?> getChange(@PathVariable int bill) {       
     
     	Map<Double, Integer> change;
+    	ObjectMapper objectMapper = new ObjectMapper();
+    	String formattedJson = null;
    	
     	// Return ACCEPTED but with a message saying the bill is not valid.
         if (!(service.getAcceptedBills().contains(bill))) {
@@ -38,8 +40,15 @@ public class CoinMachineController {
         }
          
     	change = service.calculateChange(bill);
-             
-        return ResponseEntity.ok(change);
+    	
+		try {
+			formattedJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(change);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+    	
+        //return ResponseEntity.ok(change);
+    	return ResponseEntity.ok(formattedJson);
     }
    
     
