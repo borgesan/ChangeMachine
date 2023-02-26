@@ -22,7 +22,6 @@ public class CoinMachineController {
     public CoinMachineService service;
     
 
-
 	@GetMapping("/change/{bill}")
     public ResponseEntity<?> getChange(@PathVariable int bill) {       
     
@@ -33,7 +32,7 @@ public class CoinMachineController {
         	return ResponseEntity.status(HttpStatus.ACCEPTED).body("Not a valid bill. Accepted bills are " + service.getAcceptedBills());
         }
     	
-     // Return ACCEPTED but with a message saying there is not enough balance to give change.
+        // Return ACCEPTED but with a message saying there is not enough balance to give change.
         if (bill > service.getBalance()) {
         	return ResponseEntity.status(HttpStatus.ACCEPTED).body("Not enough balance to give change. Your current balance is " + service.getBalance());
         }
