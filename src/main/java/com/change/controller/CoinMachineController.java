@@ -39,9 +39,9 @@ public class CoinMachineController {
         	return ResponseEntity.status(HttpStatus.ACCEPTED).body("Not enough balance to give change. Your current balance is " + service.getBalance());
         }
          
-    	change = service.calculateChange(bill);
-    	
+
 		try {
+	    	change = service.calculateChange(bill);
 			formattedJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(change);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
