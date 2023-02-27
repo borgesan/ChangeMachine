@@ -58,7 +58,7 @@ public class CoinMachineController {
     public ResponseEntity<String> getBalance(@RequestHeader(value = "User-Agent") String userAgent) { 
 		
     	if (!userAgent.contains("curl")) {    	
-    	return ResponseEntity.status(HttpStatusCode.valueOf(200))
+    	return ResponseEntity.status(HttpStatus.OK)
 				.body("<html><body><div>Your current balance in dollars is $" + service.getBalance()
 						+ "</div><div>Your current amount for each coin is " + service.getCoins()
 						+ "</div></body></html>");
