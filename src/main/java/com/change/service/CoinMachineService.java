@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class CoinMachineService {
 
-	@Value("${app.bills}")
-	private List<Integer> acceptedBills;
+	//@Value("${app.bills}")
+	private List<Integer> acceptedBills = Arrays.asList(1, 2, 5, 10, 20, 50, 100);
 
 	//@Value("#{${app.coins}}")
 	private Map<Double, Integer> coins = new TreeMap<>();
