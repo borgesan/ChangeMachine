@@ -55,7 +55,11 @@ public class CoinMachineService {
 				remaining = Math.round(remaining * 100.0) / 100.0;
 				count++;
 			}
-			change.put(coin, count);
+			
+			if (count > 0 ) { 
+				change.put(coin, count);
+			}
+			
 		}
 
 		updateBalanceAndAvailableCoins(change);
