@@ -5,9 +5,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.change.service.CoinMachineService;
@@ -53,9 +55,18 @@ public class CoinMachineController {
    
     
     @GetMapping("/change")
-    public ResponseEntity<String> getBalance() { 
-    	String response = ("Your current balance in dollars is $" + service.getBalance()) + "\n" + ("Your current amount for each coin is " + service.getCoins());
-    	return ResponseEntity.ok(response);
+    public ResponseEntity<String> getBalance(@RequestHeader(value = "User-Agent") String userAgent) { 
+		
+    	if (!userAgent.contains("curl")) {    	
+    	return ResponseEntity.status(HttpStatusCode.valueOf(200))
+				.body("<html><body><div>Your current balance in dollars is $" + service.getBalance()
+						+ "</div><div>Your current amount for each coin is " + service.getCoins()
+						+ "</div></body></html>");
+    	
+    	}
+
+		return ResponseEntity.status(HttpStatus.OK).body(("Your current balance in dollars is $" + service.getBalance()) + "\n" + ("Your current amount for each coin is " + service.getCoins()));
+		
     }
     
     
