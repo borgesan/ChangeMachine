@@ -52,7 +52,7 @@ public class CoinMachineController {
     }
    
     
-    @GetMapping("/change/balance")
+    @GetMapping("/change")
     public ResponseEntity<String> getBalance() { 
     	String response = ("Your current balance in dollars is $" + service.getBalance()) + "\n" + ("Your current amount for each coin is " + service.getCoins());
     	return ResponseEntity.ok(response);
