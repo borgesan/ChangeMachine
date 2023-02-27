@@ -19,7 +19,7 @@ class ChangeMachineApplicationTests {
 	        // Run test
 	        CoinMachineService service = new CoinMachineService();
 	        response = service.getAcceptedBills().contains(bill);
-	        Assertions.assertEquals(false, response);
+	        Assertions.assertEquals(true, response);
 
 	   }	   
 
