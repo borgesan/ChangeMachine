@@ -11,14 +11,14 @@ class ChangeMachineApplicationTests {
 
 	   @Test
 	    public void testValidateBill() {
-	        // Initialize test data
+	    
+		   	// Initialize test properties
 	        int bill = 10;
 	        boolean response;
 	    
-	        CoinMachineService service = new CoinMachineService();	   
-	        
+	        // Run test
+	        CoinMachineService service = new CoinMachineService();
 	        response = service.getAcceptedBills().contains(bill);
-	        
 	        Assertions.assertEquals(false, response);
 
 	   }	   
