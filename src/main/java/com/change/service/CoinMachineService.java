@@ -50,9 +50,9 @@ public class CoinMachineService {
 		for (Double coin : invertedCoins.keySet()) {
 			int count = 0;
 			while (remaining >= coin && invertedCoins.get(coin) > count) {
-			// Second test is to ensure the coin wont get negative
 				remaining -= coin;
 				remaining = Math.round(remaining * 100.0) / 100.0;
+				//remaining = (remaining * 100.0) / 100.0;
 				count++;
 			}
 			
