@@ -59,13 +59,13 @@ public class CoinMachineController {
 		
     	if (!userAgent.contains("curl")) {    	
     	return ResponseEntity.status(HttpStatus.OK)
-				.body("<html><body><div>Your current balance in dollars is $" + service.getBalance()
+				.body("<html><body><div>Your current balance is $" + service.getBalance()
 						+ "</div><div>Your current amount for each coin is " + service.getCoins()
 						+ "</div></body></html>");
     	
     	}
 
-		return ResponseEntity.status(HttpStatus.OK).body(("Your current balance in dollars is $" + service.getBalance()) + "\n" + ("Your current amount for each coin is " + service.getCoins()));
+		return ResponseEntity.status(HttpStatus.OK).body(("Your current balance is $" + service.getBalance()) + "\n" + ("Your current amount for each coin is " + service.getCoins()));
 		
     }
     
