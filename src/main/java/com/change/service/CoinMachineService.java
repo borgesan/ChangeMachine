@@ -78,7 +78,12 @@ public class CoinMachineService {
 		this.setBalance(0.0);
 		coins.keySet().stream().forEach(entry -> balance = balance + (coins.get(entry) * entry));
 		
-		//balance = balance - (coins.keySet().stream().map(coins.get(s) * s).count());
+//		Double _balance = 0.0;
+//		for (Double k: coins.keySet()) {
+//			_balance = _balance + (k * coins.get(k));
+//		}
+//		setBalance(_balance);
+
 
 
 	}
