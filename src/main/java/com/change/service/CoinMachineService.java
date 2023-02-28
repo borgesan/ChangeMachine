@@ -1,11 +1,13 @@
 package com.change.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,9 @@ public class CoinMachineService {
 	private List<Integer> acceptedBills = Arrays.asList(1, 2, 5, 10, 20, 50, 100);
 
 	//@Value("#{${app.coins}}")
-	private Map<Double, Integer> coins = new TreeMap<>();
+	private TreeMap<Double, Integer> coins = new TreeMap<>();
 	
-	private Double balance = 0.0;
+	private Double balance;
 
 
 	public CoinMachineService() {
@@ -38,12 +40,12 @@ public class CoinMachineService {
 		Map<Double, Integer> change = new TreeMap<>();
 		double remaining = bill;
 
-		TreeMap<Double, Integer> invertedCoins = new TreeMap<>(Comparator.reverseOrder());
-		invertedCoins.putAll(coins);
+		//TreeMap<Double, Integer> invertedCoins = new TreeMap<>(Comparator.reverseOrder());
+		//invertedCoins.putAll(coins);
 
-		for (Double coin : invertedCoins.keySet()) {
+		for (Double coin : coins.descendingMap().keySet()) {
 			int count = 0;
-			while (remaining >= coin && invertedCoins.get(coin) > count) {
+			while (remaining >= coin && coins.get(coin) > count) {
 				remaining -= coin;
 				remaining = Math.round(remaining * 100.0) / 100.0;
 				count++;
@@ -61,7 +63,7 @@ public class CoinMachineService {
 		for (Double coin : change.keySet()) {
 			coins.put(coin, coins.get(coin) - change.get(coin));
 		}
-		
+
 		updateBalance();
 
 		return change;
