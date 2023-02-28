@@ -67,6 +67,7 @@ public class CoinMachineService {
 		return change;
 	}
 
+	
 	private void updateBalanceAndAvailableCoins(Map<Double, Integer> change) {
 
 		// Update the number of coins available after the last change
@@ -84,10 +85,9 @@ public class CoinMachineService {
 //		}
 //		setBalance(_balance);
 
-
-
 	}
 
+	
 	public List<Integer> getAcceptedBills() {
 		return acceptedBills;
 	}
