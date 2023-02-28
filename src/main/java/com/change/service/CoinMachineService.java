@@ -18,7 +18,6 @@ public class CoinMachineService {
 	//@Value("#{${app.coins}}")
 	private Map<Double, Integer> coins = new TreeMap<>();
 	
-
 	private Double balance;
 
 
