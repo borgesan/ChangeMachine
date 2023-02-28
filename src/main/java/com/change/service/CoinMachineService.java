@@ -48,10 +48,7 @@ public class CoinMachineService {
 			}
 			
 			// Only add to the response the coins returning as change
-			if (count > 0 ) { 
-				change.put(coin, count);
-				
-			}
+			if (count > 0 ) change.put(coin, count);
 				
 		}
 
