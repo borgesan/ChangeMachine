@@ -1,13 +1,12 @@
 package com.change.service;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
-import java.util.Comparator;
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,6 @@ public class CoinMachineService {
 	
 	private Double balance;
 
-
 	public CoinMachineService() {
 		initialize();
 	}
@@ -32,7 +30,7 @@ public class CoinMachineService {
 		coins.put(0.05, 100);
 		coins.put(0.10, 100);
 		coins.put(0.25, 100);
-
+		
 		updateBalance();
 	}
 
@@ -40,8 +38,6 @@ public class CoinMachineService {
 		Map<Double, Integer> change = new TreeMap<>();
 		double remaining = bill;
 
-		//TreeMap<Double, Integer> invertedCoins = new TreeMap<>(Comparator.reverseOrder());
-		//invertedCoins.putAll(coins);
 
 		for (Double coin : coins.descendingMap().keySet()) {
 			int count = 0;
