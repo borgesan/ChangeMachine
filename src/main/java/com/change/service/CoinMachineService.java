@@ -18,7 +18,7 @@ public class CoinMachineService {
 	//@Value("#{${app.coins}}")
 	private Map<Double, Integer> coins = new TreeMap<>();
 	
-	private Double balance;
+	private Double balance = 0.0;
 
 
 	public CoinMachineService() {
@@ -31,8 +31,7 @@ public class CoinMachineService {
 		coins.put(0.10, 100);
 		coins.put(0.25, 100);
 
-		this.setBalance(0.0);
-		coins.keySet().stream().forEach(entry -> balance = balance + (coins.get(entry) * entry));
+		updateBalance();
 	}
 
 	public Map<Double, Integer> calculateChange(int bill) {
@@ -47,40 +46,27 @@ public class CoinMachineService {
 			while (remaining >= coin && invertedCoins.get(coin) > count) {
 				remaining -= coin;
 				remaining = Math.round(remaining * 100.0) / 100.0;
-				//remaining = (remaining * 100.0) / 100.0;
 				count++;
 			}
 			
+			// Only add to the response the coins returning as change
 			if (count > 0 ) { 
 				change.put(coin, count);
+				
 			}
-			
+				
 		}
 
-		updateBalanceAndAvailableCoins(change);
+		// Update the current number of coins
+		for (Double coin : change.keySet()) {
+			coins.put(coin, coins.get(coin) - change.get(coin));
+		}
+		
+		updateBalance();
 
 		return change;
 	}
 
-	
-	private void updateBalanceAndAvailableCoins(Map<Double, Integer> change) {
-
-		// Update the number of coins available after the last change
-		for (Double coin : change.keySet()) {
-			coins.put(coin, coins.get(coin) - change.get(coin));
-		}
-
-		// Update the balance
-		this.setBalance(0.0);
-		coins.keySet().stream().forEach(entry -> balance = balance + (coins.get(entry) * entry));
-		
-//		Double _balance = 0.0;
-//		for (Double k: coins.keySet()) {
-//			_balance = _balance + (k * coins.get(k));
-//		}
-//		setBalance(_balance);
-
-	}
 
 	
 	public List<Integer> getAcceptedBills() {
@@ -95,8 +81,10 @@ public class CoinMachineService {
 		return balance;
 	}
 	
-	public void setBalance(Double balance) {
-		this.balance = balance;
+	public void updateBalance() {
+		balance = 0.0;
+		coins.keySet().stream().forEach(entry -> balance = balance + (coins.get(entry) * entry));
+		
 	}
 
 }
