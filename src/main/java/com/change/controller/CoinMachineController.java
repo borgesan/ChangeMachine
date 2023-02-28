@@ -25,7 +25,7 @@ public class CoinMachineController {
     
 
 	@GetMapping("/change/{bill}")
-    public ResponseEntity<?> getChange(@PathVariable int bill) {       
+    public ResponseEntity<String> getChange(@PathVariable int bill) {       
     
     	Map<Double, Integer> change;
     	ObjectMapper objectMapper = new ObjectMapper();

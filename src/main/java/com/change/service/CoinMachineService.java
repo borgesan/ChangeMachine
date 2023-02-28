@@ -52,11 +52,9 @@ public class CoinMachineService {
 				
 		}
 
-		// Update the current number of coins
-		for (Double coin : change.keySet()) {
-			coins.put(coin, coins.get(coin) - change.get(coin));
-		}
-
+		// Updating the map with the new balance of coins after the last change.
+		change.forEach((k,v) -> coins.computeIfPresent(k, (key, value) -> value - v));
+				
 		updateBalance();
 
 		return change;
