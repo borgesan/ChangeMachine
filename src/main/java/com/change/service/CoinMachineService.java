@@ -26,10 +26,6 @@ public class CoinMachineService {
 		initialize();
 	}
 
-	/*
-	 * Define type of coins and amount available for each Reset and calculate the
-	 * balance (multiple coin type by amount)
-	 */
 	public void initialize() {
 		coins.put(0.01, 100);
 		coins.put(0.05, 100);
